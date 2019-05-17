@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  backend:
+    build: ./1stProject
+    container_name: backend
+    depends_on:
+    - database
+  frontend:
+    build: ./ProjectFrontEnd
+    container_name: frontend
+    database:
+    image: mysql:5.7
+    container_name: database
+    environment:
+    - MYSQL_ROOT_PASSWORD=groot
+    - MYSQL_DATABASE=tasklist
+    volumes:
+    - type: volume
+      source: sql
+      target: /var/lib/mysql  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+    - target: 80
+      published: 80
+    volumes:
+    - type: bind
+      source: ./nginx.conf
+      target: /etc/nginx/nginx.conf
+    depends_on:
+    - backend
+    - frontend
+volumes:
+  sql:
