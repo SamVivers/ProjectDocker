@@ -1,12 +1,12 @@
 version: '3.7'
 services:
   backend:
-    build: ./1stProject
+    image: samvivers/backend
     container_name: backend
     depends_on:
     - database
   frontend:
-    build: ./ProjectFrontEnd
+    image: samvivers/frontend
     container_name: frontend
   database:
     image: mysql:5.7
